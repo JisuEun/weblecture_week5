@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer');
 const path = require('path');
 const { sequelize } = require('./models'); // Post, Photo 모델 임포트
 const blogRoutes = require('./routes/blogRoutes'); // 라우트 모듈 임포트
@@ -19,7 +20,18 @@ sequelize.authenticate()
   .then(() => console.log('Connection has been established successfully.'))
   .catch(err => console.error('Unable to connect to the database:', err));
 
-// 블로그 라우트 사용
+// multer 설정
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({storage: storage});
+  // 블로그 라우트 사용
 app.use('/rest-api', blogRoutes);
 
 // 서버 시작
