@@ -2,16 +2,17 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const { sequelize } = require('./models'); // Post, Photo 모델 임포트
-const cors = require('cors');
+//const cors = require('cors');
 
 const app = express();
 app.use(express.json()); // JSON 요청 본문을 파싱하기 위함
 
 // CORS 설정: 개발 단계에서만 필요
+/*
 app.use(cors({
   origin: 'http://localhost:3000'
 }));
-
+*/
 const PORT = process.env.PORT || 3001; // 서버 포트 설정
 
 // 데이터베이스 연결 확인
@@ -37,6 +38,14 @@ app.use('/rest-api', blogRoutes);
 
 // 정적 파일 제공
 app.use('/uploads', express.static('uploads'));
+
+// React 빌드 폴더를 정적 파일로 제공
+app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+// 모든 경로에 대해 React 애플리케이션을 반환하도록 설정
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+});
 
 // 서버 시작
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}.`));
