@@ -15,7 +15,7 @@ module.exports = (upload) => {
     router.get('/posts/:id', blogController.getPost);
 
     // 글 수정하기
-    router.put('/posts/:id', upload.array('photos', 2), blogController.updatePost); // 사진 수정 로직을 포함해야 한다면 여기에도 upload.array를 추가
+    router.put('/posts/:id', upload.array('photos', 2), blogController.updatePost);
 
     // 글 삭제하기
     router.delete('/posts/:id', blogController.deletePost);

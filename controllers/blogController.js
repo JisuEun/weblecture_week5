@@ -136,7 +136,7 @@ exports.deletePost = async (req, res) => {
     // 각 사진 파일을 파일 시스템에서 삭제
     for (const photo of photos) {
       const filePath = path.join(__dirname, '..', 'uploads', path.basename(photo.path));
-      fs.unlinkSync(filePath); // 비동기가 아닌 동기적 방식으로 파일 삭제
+      fs.unlinkSync(filePath);
     }
 
     // 연관된 사진 정보를 데이터베이스에서 삭제

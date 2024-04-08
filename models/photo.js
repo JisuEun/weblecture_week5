@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Photo extends Model {
     static associate(models) {
       // define association here
-      Photo.belongsTo(models.Post, { foreignKey: 'post_id' }); // 오타 수정
+      Photo.belongsTo(models.Post, { foreignKey: 'post_id' });
     }
   }
   Photo.init({
